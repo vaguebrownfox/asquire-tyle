@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".RecordActivity">
+
+
+	<ImageButton
+		android:id="@+id/record_close_button"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="16dp"
+		android:layout_marginEnd="16dp"
+		android:background="@null"
+		android:src="@drawable/close"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+
+	<TextView
+		android:id="@+id/record_task_descp_tv"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+		android:alpha="1"
+		android:fontFamily="sans-serif"
+		android:padding="8dp"
+		android:text="Take a deep breath in and say 'Eee' as in 'peace'  while breathing out"
+		android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+		android:textSize="36sp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="1.0"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/record_close_button" />
+
+	<ImageButton
+		android:id="@+id/record_info"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:contentDescription="@string/info"
+		android:background="@null"
+		android:src="@drawable/info_icon"
+		android:backgroundTintMode="src_in"
+
+		android:visibility="visible"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/record_task_descp_tv" />
+
+	<Button
+		android:id="@+id/control_button_record"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="32dp"
+		android:text="@string/record"
+		android:textColor="@color/white"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toStartOf="@+id/control_button_next"
+		app:layout_constraintStart_toEndOf="@+id/control_button_play" />
+
+	<Button
+		android:id="@+id/control_button_next"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="32dp"
+		android:text="@string/next"
+		android:textColor="@color/white"
+		app:layout_constraintBaseline_toBaselineOf="@+id/control_button_record"
+		app:layout_constraintEnd_toEndOf="parent" />
+
+	<Button
+		android:id="@+id/control_button_play"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="32dp"
+		android:text="@string/previous"
+		android:textColor="@color/white"
+		app:layout_constraintBaseline_toBaselineOf="@+id/control_button_record"
+		app:layout_constraintStart_toStartOf="parent" />
+
+	<TextView
+		android:id="@+id/record_timer_tv"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:paddingVertical="16dp"
+		android:text="@string/timer_init"
+		android:textAlignment="textStart"
+		android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+		android:textColor="#FF3C3C"
+		app:layout_constraintBottom_toTopOf="@+id/control_button_record"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent" />
+
+	<TextView
+		android:id="@+id/record_prediction_result_tv"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+		android:layout_marginBottom="24dp"
+		android:fontFamily="sans-serif-medium"
+		android:text=""
+		android:textAlignment="center"
+		android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+		app:layout_constraintBottom_toTopOf="@+id/record_asthma_progressBar"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent" />
+
+	<androidx.appcompat.widget.SwitchCompat
+		android:id="@+id/record_en_pred_switch"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:padding="8dp"
+		android:text="Assess Recording   "
+		android:checked="true"
+		app:layout_constraintBottom_toTopOf="@+id/record_timer_tv"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent" />
+
+	<ProgressBar
+		android:id="@+id/record_asthma_progressBar"
+		style="?android:attr/progressBarStyleHorizontal"
+		android:layout_width="0dp"
+		android:layout_height="17dp"
+		android:layout_marginStart="12dp"
+		android:layout_marginEnd="12dp"
+		android:layout_marginBottom="16dp"
+		android:indeterminate="false"
+		android:indeterminateTint="#FF3C3C"
+		android:indeterminateTintMode="src_atop"
+		android:progress="0"
+		app:layout_constraintBottom_toTopOf="@+id/record_en_pred_switch"
+		app:layout_constraintEnd_toStartOf="@+id/record_high_pred_tv"
+		app:layout_constraintStart_toEndOf="@+id/record_low_pred_tv" />
+
+	<TextView
+		android:id="@+id/record_low_pred_tv"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="16dp"
+		android:layout_marginTop="16dp"
+		android:text="Not\nAsthmatic"
+		android:textAlignment="center"
+		android:textStyle="bold"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/record_prediction_result_tv" />
+
+	<TextView
+		android:id="@+id/record_high_pred_tv"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="16dp"
+		android:layout_marginEnd="16dp"
+		android:text="Highly\nAsthmatic"
+		android:textAlignment="center"
+		android:textStyle="bold"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/record_prediction_result_tv" />
+
+	<androidx.appcompat.widget.SwitchCompat
+		android:id="@+id/dark_mode_switch"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="16dp"
+		android:layout_marginTop="16dp"
+		android:checked="true"
+		android:text="Dark mode   "
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

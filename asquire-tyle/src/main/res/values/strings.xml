@@ -1,0 +1,17 @@
+<resources>
+	<string name="app_name">Asquire Tyle 0x0A</string>
+	<string name="logo">Asquire Logo</string>
+	<string name="allowed_name_chars2" >abcdefghijklmnopqrstuvwxyz</string>
+	<string name="add_user">Add user</string>
+	<string name="info">Info</string>
+	<string name="record">Record</string>
+	<string name="next">Next</string>
+	<string name="previous">Play</string>
+	<string name="timer_init">00:00:00</string>
+	<string name="need_record_audio_permission">Please gibb permission!</string>
+	<string name="stop">Stop</string>
+	<string name="play">Play</string>
+	<string name="analysing_msg">Analysing...</string>
+	<string name="pred_result_message">Result</string>
+	<string name="playing">Playing</string>
+</resources>

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "822668260575",
+    "firebase_url": "https://asquire-tyle.firebaseio.com",
+    "project_id": "asquire-tyle",
+    "storage_bucket": "asquire-tyle.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822668260575:android:8a2e308a88b798a074256a",
+        "android_client_info": {
+          "package_name": "aashi.fiaxco.asquiretyle0x0a"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822668260575-h69seup0dvbrsntb5ksn8jqklgv5jt2k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdWnClCMWKQXEHaWwXNMx5CWQx5AAD02E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822668260575-h69seup0dvbrsntb5ksn8jqklgv5jt2k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

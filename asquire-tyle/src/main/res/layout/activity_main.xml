@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".UserIDActivity">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+
+		<ImageView
+			android:id="@+id/main_image"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1"
+			android:contentDescription="@string/logo"
+			android:padding="64dp"
+			android:src="@drawable/asquire_logo"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1">
+
+
+
+			<RadioGroup
+				android:id="@+id/main_buttons_RG"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="64dp"
+				android:layout_marginEnd="64dp"
+				android:layout_marginBottom="16dp"
+				android:orientation="vertical"
+				android:paddingStart="64dp"
+				android:paddingEnd="0dp"
+				android:textAlignment="textEnd"
+				app:layout_constraintBottom_toTopOf="@+id/main_username_ET"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent" />
+
+			<EditText
+				android:id="@+id/main_username_ET"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="64dp"
+				android:layout_marginEnd="64dp"
+				android:layout_marginBottom="16dp"
+				android:autofillHints="false"
+				android:backgroundTint="@color/colorAccent"
+				android:gravity="center"
+				android:digits="@string/allowed_name_chars2"
+				android:maxLength="18"
+				android:hint="New user? Create username..."
+				android:inputType="textPhonetic"
+				android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+				app:layout_constraintBottom_toTopOf="@+id/main_add_user_FAB"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent" />
+
+			<com.google.android.material.floatingactionbutton.FloatingActionButton
+				android:id="@+id/main_add_user_FAB"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="32dp"
+				android:backgroundTint="@color/colorAccent"
+				android:src="@drawable/add_fab"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				android:contentDescription="@string/add_user" />
+
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

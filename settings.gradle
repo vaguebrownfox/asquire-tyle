@@ -1,0 +1,2 @@
+include ':asquire-tyle'
+rootProject.name = "Asquire Tyle 0x0A"
