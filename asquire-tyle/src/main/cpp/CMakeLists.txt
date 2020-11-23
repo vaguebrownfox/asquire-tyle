@@ -139,4 +139,4 @@ target_link_libraries( # Specifies the target library.
         ${log-lib})
 
 
-#target_compile_options(asq-lib PRIVATE -Wall -Werror "$<$<CONFIG:RELEASE>:-Ofast>")
+target_compile_options(asq-lib PRIVATE -Wall -Werror "$<$<CONFIG:RELEASE>:-Ofast>")
