@@ -38,6 +38,8 @@
 			android:theme="@style/Theme.AsquireTyle0x0A"/>
 		<activity
 			android:name=".UserIDActivity"
+			android:icon="@drawable/asquire_logo"
+			android:windowSoftInputMode="stateHidden"
 			android:theme="@style/Theme.AsquireTyle0x0A">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />

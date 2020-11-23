@@ -31,8 +31,6 @@ AsqPlyEngine::onAudioReady(oboe::AudioStream *oboeStream, void *audioData, int32
 	auto *outputData = static_cast<int16_t *>(audioData);
 
 	if (!mPlyFile.eof()) {
-
-
 		mPlyFile.read(reinterpret_cast<char *>(outputData),  numBytes);
 		LOGD("Asquire Ply Engine: numFrames: %d", numFrames);
 	} else {

@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -27,6 +28,7 @@ public class AudioService extends Service {
 	private String mUserId;
 	private static final String[] mModels = {"cough.model", "cough_1.model", "feats_0.txt"};
 	private final HashMap<String, String> mModelCacheFiles = new HashMap<>();
+	private String mCodeName;
 
 
 
@@ -79,6 +81,19 @@ public class AudioService extends Service {
 		mIsPlaying = false;
 		mRecordDone = false;
 		mPlayDone = false;
+
+		Field[] fields = Build.VERSION_CODES.class.getFields();
+		String codeName = "UNKNOWN";
+		for (Field field : fields) {
+			try {
+				if (field.getInt(Build.VERSION_CODES.class) == Build.VERSION.SDK_INT) {
+					codeName = field.getName();
+				}
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		}
+		mCodeName = codeName;
 	}
 
 	public void recFunction() {
@@ -122,6 +137,7 @@ public class AudioService extends Service {
 			Random rand = new Random();
 			int id = rand.nextInt(2000);
 			RecFilename = mUserId + "_"
+					+ mCodeName + "_"
 					+ Build.MANUFACTURER + "_"
 					+ Build.BRAND + "_" + id + ".wav";
 		}

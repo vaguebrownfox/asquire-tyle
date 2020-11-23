@@ -2,9 +2,9 @@ package aashi.fiaxco.asquiretyle0x0a;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
@@ -16,11 +16,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import aashi.fiaxco.asquiretyle0x0a.asqengine.AsqEngine;
 import aashi.fiaxco.asquiretyle0x0a.asqengine.AsqViewModel;
@@ -44,6 +45,7 @@ public class RecordActivity extends AppCompatActivity implements Timer.MessageCo
 
 	// Data
 	private String mUserID;
+	private String mUserTimeStamp;
 	private AsqViewModel mAsqViewModel;
 	private String[] mStimulus;
 	private int mNStimuli;
@@ -54,6 +56,7 @@ public class RecordActivity extends AppCompatActivity implements Timer.MessageCo
 	private UploadService mUploadService;
 	private Timer mTimer;
 	private Timer.TimerHandler mTimerHandler;
+	private FirebaseAnalytics mFirebaseAnalytics;
 
 
 	// Boolean Flags
@@ -68,6 +71,7 @@ public class RecordActivity extends AppCompatActivity implements Timer.MessageCo
 		// Get Data from Previous Activity
 		Intent pIntent = getIntent();
 		mUserID = pIntent.getStringExtra(UserIDActivity.USER_ID);
+		mUserTimeStamp = pIntent.getStringExtra(SurveyActivity.TIMESTAMP);
 
 		// Find View
 		{
@@ -112,11 +116,15 @@ public class RecordActivity extends AppCompatActivity implements Timer.MessageCo
 		unbindService(mAsqViewModel.getAudioServiceConnection());
 		unbindService(mAsqViewModel.getUploadServiceConnection());
 		stopServices();
+		finish();
 		super.onPause();
 	}
 
 	// On Create Methods
 	private void initVarData() {
+		// Firebase
+		mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+		mFirebaseAnalytics.setUserId(mUserID);
 		// Stimulus Description Array
 		mStimulus = Stimulus.getStimulus();
 		// Timer
@@ -158,6 +166,7 @@ public class RecordActivity extends AppCompatActivity implements Timer.MessageCo
 				mRecordButton.postDelayed(() -> mRecordButton.setEnabled(true), 1000);
 
 			} else {
+				firebaseRecSelect();
 				mRecDuration = mTimer.getElapsedTime();
 				mRecordButton.setEnabled(false);
 				mRecordButton.postDelayed(() -> {
@@ -210,6 +219,25 @@ public class RecordActivity extends AppCompatActivity implements Timer.MessageCo
 		});
 	}
 
+	private void firebaseRecSelect()  {
+		Bundle bundle = new Bundle();
+		bundle.putString(FirebaseAnalytics.Param.ITEM_ID, mUserID);
+		bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "stimuli_" + mNStimuli);
+		bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "audio");
+		bundle.putString(FirebaseAnalytics.Param.SOURCE, "record_button");
+		bundle.putString("record_duration_ms", String.valueOf(mRecDuration));
+		mFirebaseAnalytics.logEvent("record_action", bundle);
+	}
+
+	private void firebaseNxtSelect() {
+		Bundle bundle = new Bundle();
+		bundle.putString(FirebaseAnalytics.Param.ITEM_ID, mUserID);
+		bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "stimuli_" + mNStimuli);
+		bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "audio_upload");
+		bundle.putString(FirebaseAnalytics.Param.SOURCE, "next_button");
+		mFirebaseAnalytics.logEvent("upload_action", bundle);
+	}
+
 	// Button Functions
 	private void setOnClickListeners() {
 
@@ -235,10 +263,11 @@ public class RecordActivity extends AppCompatActivity implements Timer.MessageCo
 				}
 
 				// Start / Stop Recording
-				mAudService.setUserId(mUserID);
+				mAudService.setUserId(mNStimuli + "-" + mUserID + "-" + mUserTimeStamp);
 				mAudService.recFunction();
 
 				mAsqViewModel.setIsRecording(mAudService.isRecording());
+
 			} else {
 				Log.d(TAG, "Service object is null");
 			}
@@ -255,14 +284,17 @@ public class RecordActivity extends AppCompatActivity implements Timer.MessageCo
 				if (mAudService.isRecordDone()) {
 					Log.d(TAG, "onCreate: Uploading started");
 					mUploadService.uploadData(mAudService.getRecFilePath(), mAudService.getRecFilename());
+					firebaseNxtSelect();
 
 					mAudService.setIsRecordingDone(false);
 					mResultTv.setText("");
 					mAsthmaProgress.setProgress(0);
 
+					mTimerTv.setTextColor(getResources().getColor(R.color.red_200));
 					mTimerHandler.sendEmptyMessage(MSG_RESET_TIMER);
 
-					mStimuliDescriptionTv.setText(mStimulus[++mNStimuli % mStimulus.length]);
+					mNStimuli = ++mNStimuli % mStimulus.length;
+					mStimuliDescriptionTv.setText(mStimulus[mNStimuli]);
 
 				} else {
 					makeToast("Finish recording before next!");
@@ -281,8 +313,11 @@ public class RecordActivity extends AppCompatActivity implements Timer.MessageCo
 		});
 
 		mDarkModeSwitch.setOnCheckedChangeListener((compoundButton, b) -> {
-
+			if (b) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+			else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 		});
+
+
 	}
 
 	private void playControl() {
@@ -299,7 +334,6 @@ public class RecordActivity extends AppCompatActivity implements Timer.MessageCo
 		}
 	}
 
-	private boolean mPredicted = false;
 	private void doPredict() {
 		if (mAudService.isRecordDone()) {
 			mResultTv.setText(R.string.analysing_msg);
@@ -334,7 +368,8 @@ public class RecordActivity extends AppCompatActivity implements Timer.MessageCo
 		startService(upServiceIntent);
 		bindService(upServiceIntent, mAsqViewModel.getUploadServiceConnection(), Context.BIND_AUTO_CREATE);
 	}
-private void stopServices() {
+
+	private void stopServices() {
 		// Audio Service - Pass User ID here
 		Intent audServiceIntent = new Intent(this, AudioService.class);
 		stopService(audServiceIntent);
@@ -346,11 +381,7 @@ private void stopServices() {
 
 	@Override
 	public void onBackPressed() {
-		if (false) {
-			super.onBackPressed();
-		} else {
-			makeToast("Press X to eXit");
-		}
+		makeToast("Press X to eXit");
 	}
 
 	// Permissions
