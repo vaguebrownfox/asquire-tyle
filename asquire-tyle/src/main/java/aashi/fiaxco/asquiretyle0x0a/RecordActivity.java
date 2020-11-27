@@ -340,7 +340,7 @@ public class RecordActivity extends AppCompatActivity implements Timer.MessageCo
 			mAsthmaProgress.setIndeterminate(true);
 
 			// Prediction result
-			float op = AsqEngine.asqPredict("lol", "lol"); // TODO: temp param featfile
+			float op = 0.5f; //AsqEngine.asqPredict("lol", "lol"); // TODO: temp param featfile
 
 			mResultTv.postDelayed(() -> {
 				mResultTv.setText(R.string.pred_result_message);

@@ -31,17 +31,14 @@
 
 		<activity
 			android:name=".RecordActivity"
-			android:screenOrientation="portrait"
 			android:parentActivityName=".UserIDActivity"
 			android:theme="@style/Theme.AsquireTyle0x0A" />
 		<activity
 			android:name=".SurveyActivity"
-			android:screenOrientation="portrait"
 			android:theme="@style/Theme.AsquireTyle0x0A"/>
 		<activity
 			android:name=".UserIDActivity"
 			android:icon="@drawable/asquire_logo"
-			android:screenOrientation="portrait"
 			android:windowSoftInputMode="stateHidden"
 			android:theme="@style/Theme.AsquireTyle0x0A">
 			<intent-filter>

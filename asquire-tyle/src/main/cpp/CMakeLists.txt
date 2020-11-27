@@ -43,6 +43,7 @@ add_library( # Sets the name of the library.
         # Provides a relative path to your source file(s).
         asqengine/AsqRecEngine.cpp
         asqengine/AsqPlyEngine.cpp
+        prediction/Prediction.cpp
 
         jni-bridge.cpp)
 
@@ -139,4 +140,4 @@ target_link_libraries( # Specifies the target library.
         ${log-lib})
 
 
-target_compile_options(asq-lib PRIVATE -Wall -Werror "$<$<CONFIG:RELEASE>:-Ofast>")
+# target_compile_options(asq-lib PRIVATE -Wall -Werror "$<$<CONFIG:RELEASE>:-Ofast>")

@@ -26,7 +26,7 @@ public class AudioService extends Service {
 	private String RecFilePath;
 	private String RecFilename;
 	private String mUserId;
-	private static final String[] mModels = {"cough.model", "cough_1.model", "feats_0.txt"};
+	private static final String[] mModels = {"cough.model", "cough_1.model", "cough_72.model"};
 	private final HashMap<String, String> mModelCacheFiles = new HashMap<>();
 	private String mCodeName;
 
@@ -160,6 +160,8 @@ public class AudioService extends Service {
 
 		boolean res = AsqEngine.setRecOn(false);
 		mRecState = STATE.START;
+
+		float op = AsqEngine.asqPredict(mModelCacheFiles.get(mModels[2]));
 	}
 
 

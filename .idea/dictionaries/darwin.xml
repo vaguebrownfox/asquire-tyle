@@ -2,8 +2,13 @@
   <dictionary name="darwin">
     <words>
       <w>asquire</w>
+      <w>coeffs</w>
+      <w>featfile</w>
+      <w>featstats</w>
+      <w>mfcc</w>
       <w>plybuff</w>
       <w>pstop</w>
+      <w>purgeable</w>
       <w>rstop</w>
       <w>shakira</w>
       <w>tyle</w>

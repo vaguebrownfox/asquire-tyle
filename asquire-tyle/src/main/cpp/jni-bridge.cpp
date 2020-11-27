@@ -3,6 +3,7 @@
 #include <logging_macros.h>
 #include "asqengine/AsqRecEngine.h"
 #include "asqengine/AsqPlyEngine.h"
+#include "prediction/Prediction.h"
 
 AsqRecEngine *rengine = nullptr;
 AsqPlyEngine *pengine = nullptr;
@@ -122,8 +123,17 @@ Java_aashi_fiaxco_asquiretyle0x0a_asqengine_AsqEngine_native_1setDefaultStreamVa
 extern "C"
 JNIEXPORT jfloat JNICALL
 Java_aashi_fiaxco_asquiretyle0x0a_asqengine_AsqEngine_asqPredict(JNIEnv *env, jclass clazz,
-                                                                 jstring model_file_path,
-                                                                 jstring featfile) {
+                                                                 jstring model_file_path) {
+
+	const char *modelFilePath = env->GetStringUTFChars(model_file_path, nullptr);
+	const char *wavFilePath = rengine->getWavFilePath();
+
+	auto* asqPrediction = new Prediction(wavFilePath, modelFilePath);
+
+	asqPrediction->asqPredict();
+
+	delete asqPrediction;
+
 	float op = (rand() % 100);
 
 	return op;
