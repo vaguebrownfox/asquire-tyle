@@ -15,7 +15,7 @@ project("asquiretyle0x0a")
 # Gradle automatically packages shared libraries with your APK.
 
 # kaldi-lite source
-set(KALDI_DIR /home/darwin/Libs/kaldi_lite)
+set(KALDI_DIR /Users/jfox/exlibsrc/kaldlite)
 add_subdirectory(${KALDI_DIR} ./kaldi-bin)
 include_directories(
         ${KALDI_DIR}/include
@@ -25,7 +25,7 @@ include_directories(
 )
 
 # Oboe source - download from github: gooogle/oboe
-set(OBOE_DIR /home/darwin/Libs/oboe)
+set(OBOE_DIR /Users/jfox/exlibsrc/oboe)
 add_subdirectory(${OBOE_DIR} ./oboe-bin)
 include_directories(${OBOE_DIR}/include ${OBOE_DIR}/samples/shared)
 

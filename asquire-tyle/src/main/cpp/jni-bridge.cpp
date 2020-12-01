@@ -125,12 +125,18 @@ JNIEXPORT jfloat JNICALL
 Java_aashi_fiaxco_asquiretyle0x0a_asqengine_AsqEngine_asqPredict(JNIEnv *env, jclass clazz,
                                                                  jstring model_file_path) {
 
+	// Model and Wav filepath
 	const char *modelFilePath = env->GetStringUTFChars(model_file_path, nullptr);
 	const char *wavFilePath = rengine->getWavFilePath();
 
+	// Prediction object
 	auto* asqPrediction = new Prediction(wavFilePath, modelFilePath);
 
 	asqPrediction->asqPredict();
+
+	char outputFilepath[200];
+	strcpy(outputFilepath, asqPrediction->getOutputFilePath());
+	
 
 	delete asqPrediction;
 
