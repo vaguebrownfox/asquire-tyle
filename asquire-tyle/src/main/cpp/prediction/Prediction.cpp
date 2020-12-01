@@ -261,6 +261,7 @@ void Prediction::asqPredict() {
 
 	FILE* output = fopen(mOutputFilePath, "w");
 
+
 	predict(input, asqModel, output);
 
 	fclose(input);
