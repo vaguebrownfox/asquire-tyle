@@ -107,6 +107,7 @@ public class AudioService extends Service {
 				mIsRecording = false;
 				stopRecord();
 				mRecordDone = true;
+				AsqEngine.asqPredict(mModelCacheFiles.get(mModels[2]));
 				break;
 			default:
 				break;
@@ -161,7 +162,6 @@ public class AudioService extends Service {
 		boolean res = AsqEngine.setRecOn(false);
 		mRecState = STATE.START;
 
-		float op = AsqEngine.asqPredict(mModelCacheFiles.get(mModels[2]));
 	}
 
 
