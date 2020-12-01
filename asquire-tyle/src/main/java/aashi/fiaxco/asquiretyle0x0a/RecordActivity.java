@@ -170,7 +170,7 @@ public class RecordActivity extends AppCompatActivity implements Timer.MessageCo
 				mRecDuration = mTimer.getElapsedTime();
 				mRecordButton.setEnabled(false);
 				mRecordButton.postDelayed(() -> {
-					doPredict();
+//					doPredict();
 					mNextButton.setEnabled(true);
 					mPlayButton.setEnabled(true);
 					mRecordButton.setEnabled(true);

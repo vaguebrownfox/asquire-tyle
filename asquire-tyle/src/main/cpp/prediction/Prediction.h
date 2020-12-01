@@ -24,7 +24,7 @@
 
 #include <random>
 class Prediction {
-private:
+private: // Class Variables
 	const char* mWavFilePath;
 	const char* mModelFilePath;
 	char mStatsFilePath[200]{};
@@ -37,18 +37,21 @@ private:
 
 	kaldi::Matrix<kaldi::BaseFloat> mFeatures;
 
-public:
+public: // Class Methods
 	Prediction(const char* filepath, const char* modelFilePath);
 	~Prediction();
 
 	void asqPredict();
 
-private:
+private: // Support Methods
 	void computeMfccFeats();
 	void calculateMfccStats();
 	void writeFeatStats(int size);
-	void writeFeats();
 
+public: // Get
+	const char* getOutputFilePath() {
+		return mOutputFilePath;
+	}
 };
 
 
