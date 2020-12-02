@@ -44,7 +44,6 @@ Prediction::Prediction(const char *wavFilepath, const char *modelFilePath) {
         mMfccOptions.mel_opts.vtln_high = 7200;
         mMfccOptions.mel_opts.debug_mel = false;
         mMfccOptions.mel_opts.htk_mode = false;
-        mMfccOptions.
     }
 
 }
