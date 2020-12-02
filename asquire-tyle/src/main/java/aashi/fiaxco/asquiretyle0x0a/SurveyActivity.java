@@ -68,5 +68,4 @@ public class SurveyActivity extends AppCompatActivity {
 				"https://docs.google.com/forms/d/e/1FAIpQLSeoU1W6Xh1wICI7hJA8ku01aHO2sPFQDqLyGVwUXA9NfEkdfg/viewform?usp=sf_link");
 	}
 
-
 }

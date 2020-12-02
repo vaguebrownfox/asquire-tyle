@@ -44,7 +44,6 @@ Prediction::Prediction(const char *wavFilepath, const char *modelFilePath) {
         mMfccOptions.mel_opts.vtln_high = 7200;
         mMfccOptions.mel_opts.debug_mel = false;
         mMfccOptions.mel_opts.htk_mode = false;
-        mMfccOptions.
     }
 
 }
@@ -246,21 +245,6 @@ void Prediction::asqPredict() {
     test.close();
 }
 
-void Prediction::asqPredict() {
-	computeMfccFeats();
-	calculateMfccStats();
-
-	struct svm_model* asqModel = svm_load_model(mModelFilePath);
-
-	FILE* input = fopen(mStatsFilePath, "r");
-
-	FILE* output = fopen(mOutputFilePath, "w");
-
-	predict(input, asqModel, output);
-
-	fclose(input);
-	fclose(output);
-}
 
 //--------------------------purgeable - write mfcc feats to a file
 /*char testf[200];

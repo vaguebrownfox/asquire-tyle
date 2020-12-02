@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
@@ -40,21 +41,32 @@
 			android:layout_weight="1">
 
 
-
-			<RadioGroup
-				android:id="@+id/main_buttons_RG"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="64dp"
-				android:layout_marginEnd="64dp"
-				android:layout_marginBottom="16dp"
-				android:orientation="vertical"
-				android:paddingStart="64dp"
-				android:paddingEnd="0dp"
-				android:textAlignment="textEnd"
+			<ScrollView
+				android:layout_width="match_parent"
+				android:layout_height="0dp"
 				app:layout_constraintBottom_toTopOf="@+id/main_username_ET"
 				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintStart_toStartOf="parent" />
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent">
+
+				<RadioGroup
+					android:id="@+id/main_buttons_RG"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="64dp"
+					android:layout_marginEnd="64dp"
+					android:layout_marginBottom="16dp"
+					android:orientation="vertical"
+					android:paddingStart="64dp"
+					android:paddingEnd="0dp"
+					android:textAlignment="textEnd"
+					app:layout_constraintBottom_toTopOf="@+id/main_username_ET"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toStartOf="parent" >
+
+				</RadioGroup>
+
+			</ScrollView>
 
 			<EditText
 				android:id="@+id/main_username_ET"
@@ -86,7 +98,6 @@
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				android:contentDescription="@string/add_user" />
-
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
 
