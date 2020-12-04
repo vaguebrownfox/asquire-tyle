@@ -136,6 +136,16 @@ public class RecordActivity extends AppCompatActivity implements Timer.MessageCo
 	private void initUIValues() {
 		mNStimuli = 0;
 		mStimuliDescriptionTv.setText(mStimulus[0]);
+		///////
+		mAssessSwitch.setChecked(false);
+		boolean b = false;
+		int v = b ? View.VISIBLE : View.INVISIBLE;
+		mResultTv.setVisibility(v);
+		mNAsthmaTv.setVisibility(v);
+		mHAsthmaTv.setVisibility(v);
+		mAsthmaProgress.setVisibility(v);
+		mAssessSwitch.setChecked(false);
+		///////
 	}
 
 	private void setViewModelObservers() {
@@ -293,11 +303,14 @@ public class RecordActivity extends AppCompatActivity implements Timer.MessageCo
 		});
 
 		mAssessSwitch.setOnCheckedChangeListener((compoundButton, b) -> {
+			b = false;
 			int v = b ? View.VISIBLE : View.INVISIBLE;
 			mResultTv.setVisibility(v);
 			mNAsthmaTv.setVisibility(v);
 			mHAsthmaTv.setVisibility(v);
 			mAsthmaProgress.setVisibility(v);
+			mAssessSwitch.setChecked(false);
+			makeToast("Model not ready!");
 		});
 
 

@@ -335,7 +335,7 @@ public class SurveyActivity extends AppCompatActivity {
 			mHeight = heightET.getText().toString();
 			mWeight = weightET.getText().toString();
 
-			if (!checkForEmptyText() || true) { // true for debugging
+			if (!checkForEmptyText()) { // true for debugging
 				mUserInfoView.setVisibility(View.GONE);
 
 				// TODO: Store user info data
