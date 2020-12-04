@@ -26,7 +26,7 @@ public class AudioService extends Service {
 	private String RecFilePath;
 	private String RecFilename;
 	private String mUserId;
-	private static final String[] mModels = {"cough.model", "cough_1.model", "cough_72.model"};
+	private static final String[] mModels = {"cough_72.model"};
 	private final HashMap<String, String> mModelCacheFiles = new HashMap<>();
 	private String mCodeName;
 
@@ -52,7 +52,7 @@ public class AudioService extends Service {
 	@Override
 	public IBinder onBind(Intent intent) {
 		AsqEngine.setDefaultStreamValues(this);
-		clearCache();
+//		clearCache();
 		cacheModelFiles();
 		return mBinder;
 	}
@@ -107,7 +107,7 @@ public class AudioService extends Service {
 				mIsRecording = false;
 				stopRecord();
 				mRecordDone = true;
-				AsqEngine.asqPredict(mModelCacheFiles.get(mModels[2]));
+				AsqEngine.asqPredict(mModelCacheFiles.get(mModels[0]));
 				break;
 			default:
 				break;
@@ -223,6 +223,7 @@ public class AudioService extends Service {
 		AsqEngine.setRecOn(false);
 		AsqEngine.setPlyOn(false);
 		AsqEngine.delete();
+		clearCache();
 		super.onDestroy();
 	}
 
@@ -234,9 +235,10 @@ public class AudioService extends Service {
 		AsqEngine.setPlyOn(false);
 		AsqEngine.delete();
 
+
+
 		stopSelf();
 
-		clearCache();
 	}
 
 	// Misc

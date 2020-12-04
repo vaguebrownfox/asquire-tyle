@@ -5,7 +5,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,9 +24,20 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
+import aashi.fiaxco.asquiremoon0x0b.asqengine.AsqViewModel;
+import aashi.fiaxco.asquiremoon0x0b.asqengine.AudioService;
+import aashi.fiaxco.asquiremoon0x0b.asqengine.UploadService;
 import aashi.fiaxco.asquiremoon0x0b.fragments.QuestionFragment;
 import aashi.fiaxco.asquiremoon0x0b.fragments.QuestionViewModel;
 import aashi.fiaxco.asquiremoon0x0b.providestuff.Question;
@@ -32,6 +45,7 @@ import aashi.fiaxco.asquiremoon0x0b.providestuff.Questions;
 
 public class SurveyActivity extends AppCompatActivity {
 
+	public static final String TIMESTAMP = "surveytimestamp";
 	// Constants
 	private static final String TAG = "SurveyActivity";
 
@@ -50,6 +64,10 @@ public class SurveyActivity extends AppCompatActivity {
 	private HashMap<String, QuestionFragment> mQuestionFragMap;
 	private HashMap<String, String> mAnswers;
 	private int mNQs;
+
+	// Service
+	private UploadService mUploadService;
+	private AsqViewModel mAsqViewModel;
 
 
 	@Override
@@ -99,12 +117,44 @@ public class SurveyActivity extends AppCompatActivity {
 
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		startServices();
+	}
+
+	@Override
+	protected void onPause() {
+		stopServices();
+		super.onPause();
+	}
+
 	private void initUIValues() {
+
+		// Init View model
+		mAsqViewModel = ViewModelProviders.of(this).get(AsqViewModel.class);
+		// Upload Service Binder
+		mAsqViewModel.getUpBinder().observe(this, fireBinder -> {
+			if (fireBinder != null) {
+				mUploadService = fireBinder.getUploadService();
+				Log.d(TAG, "onCreate: Connected to Upload Service");
+			} else {
+				mUploadService = null;
+				Log.d(TAG, "onCreate: Unbound from the service");
+			}
+		});
 
 		SharedPreferences sharedPref = SurveyActivity.this.getPreferences(Context.MODE_PRIVATE);
 		boolean consentAccept = sharedPref.getBoolean(mUserID + "accept", false);
 		mConsentView.setVisibility(consentAccept ? View.INVISIBLE : View.VISIBLE);
 		mUserInfoView.setVisibility(!consentAccept ? View.INVISIBLE : View.VISIBLE);
+
+		boolean surveyDone = sharedPref.getBoolean(mUserID + "survey", false);
+		if (surveyDone) {
+			Intent intent = new Intent(SurveyActivity.this, UserIDActivity.class);
+			setResult(Activity.RESULT_OK, intent);
+			finish();
+		}
 
 		setupSpinner();
 
@@ -239,7 +289,7 @@ public class SurveyActivity extends AppCompatActivity {
 				mAnswers.put("" + qNo, answer);
 
 
-				mDoneButton.setVisibility(qNo == mNQs || qNo == mNQs - 1 ? View.VISIBLE : View.GONE);
+				mDoneButton.setVisibility(qNo == mNQs || (qNo == mNQs - 1) && mAnswers.get("" + (mNQs - 1)).equals("No") ? View.VISIBLE : View.GONE);
 			}
 		});
 	}
@@ -289,6 +339,11 @@ public class SurveyActivity extends AppCompatActivity {
 				mUserInfoView.setVisibility(View.GONE);
 
 				// TODO: Store user info data
+				String[] info = new String[]{"name", "age", "gender", "height", "weight"};
+				String[] infoVal = new String[]{mName, mAge, mGender, mHeight, mWeight};
+				for (int i = 0; i < info.length; i++) {
+					mAnswers.put(info[i], infoVal[i]);
+				}
 
 				addQuestionFragment(1); // add first question
 
@@ -296,6 +351,42 @@ public class SurveyActivity extends AppCompatActivity {
 				Toast.makeText(this, "Fill all the fields", Toast.LENGTH_SHORT).show();
 		});
 
+		mDoneButton.setOnClickListener(view -> {
+
+			StringBuilder data = new StringBuilder();
+			Set<String> keys = mAnswers.keySet();
+			List<String> ansKeys = new ArrayList<String>(keys);
+			Collections.sort(ansKeys);
+
+			data.append("userID").append(":").append(mUserID).append("\n");
+			for (String k : ansKeys) {
+				String answer = mAnswers.get(k);
+				data.append(k).append(":").append(answer == null ? "NA" : answer).append("\n");
+			}
+
+			File file = new File(getCacheDir(), mUserID + ".meta");
+			try {
+				OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file));
+				outputStreamWriter.write(String.valueOf(data));
+				outputStreamWriter.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			if (mUploadService != null) {
+				mUploadService.uploadData(file.getAbsolutePath(), file.getName());
+				SharedPreferences sharedPref = SurveyActivity.this.getPreferences(Context.MODE_PRIVATE);
+				SharedPreferences.Editor editor = sharedPref.edit();
+				String acceptID = mUserID + "survey";
+				editor.putBoolean(acceptID, true);
+				editor.apply();
+			}
+
+
+			Intent intent = new Intent(SurveyActivity.this, UserIDActivity.class);
+			setResult(Activity.RESULT_OK, intent);
+			finish();
+		});
 
 	}
 
@@ -362,5 +453,18 @@ public class SurveyActivity extends AppCompatActivity {
 	// Misc
 	private void makeToast(String msg) {
 		Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+	}
+
+	// Service Functions
+	private void startServices() {
+		// Upload Service - Pass User ID here
+		Intent upServiceIntent = new Intent(this, UploadService.class);
+		startService(upServiceIntent);
+		bindService(upServiceIntent, mAsqViewModel.getUploadServiceConnection(), Context.BIND_AUTO_CREATE);
+	}
+
+	private void stopServices() {
+		Intent upServiceIntent = new Intent(this, UploadService.class);
+		stopService(upServiceIntent);
 	}
 }

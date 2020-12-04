@@ -27,6 +27,7 @@ public class AsqViewModel extends ViewModel {
 			Log.d(TAG, "onServiceConnected: Connected to audio service");
 			AudioService.AudioBinder binder = (AudioService.AudioBinder) iBinder;
 			mAudBinder.postValue(binder);
+
 		}
 
 		@Override

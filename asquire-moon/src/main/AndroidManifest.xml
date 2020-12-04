@@ -22,18 +22,26 @@
 		android:roundIcon="@mipmap/ic_launcher_round"
 		android:supportsRtl="true"
 		android:theme="@style/Theme.AsquireMoon0x0B">
+		<service
+			android:name=".asqengine.UploadService"
+			android:enabled="true"
+			android:exported="false" />
+		<service
+			android:name=".asqengine.AudioService"
+			android:enabled="true"
+			android:exported="false" />
+		<activity android:name=".RecordActivity" />
 		<activity
 			android:name=".SurveyActivity"
 			android:screenOrientation="portrait"
 			android:theme="@style/Theme.AsquireMoon0x0B"
-			android:windowSoftInputMode="stateHidden"
-			/>
+			android:windowSoftInputMode="stateHidden" />
 		<activity
 			android:name=".UserIDActivity"
 			android:icon="@drawable/asquire_logo"
 			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden"
-			android:theme="@style/Theme.AsquireMoon0x0B">
+			android:theme="@style/Theme.AsquireMoon0x0B"
+			android:windowSoftInputMode="stateHidden">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 

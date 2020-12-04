@@ -25,4 +25,12 @@
 	<string name="okay">OK</string>
 	<string name="ok">Ok</string>
 	<string name="enter_your_answer_here">Enter your answer here</string>
+	<string name="timer_init">00:00:00</string>
+	<string name="record">Record</string>
+	<string name="info">Info</string>
+	<string name="previous">Play</string>
+	<string name="need_record_audio_permission">Gibb permission to record please</string>
+	<string name="playing">Playing</string>
+	<string name="play">Play</string>
+	<string name="stop">Stop</string>
 </resources>
