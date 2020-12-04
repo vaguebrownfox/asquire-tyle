@@ -1,0 +1,2 @@
+include ':asquire-moon'
+rootProject.name = "Asquire Moon 0x0B"

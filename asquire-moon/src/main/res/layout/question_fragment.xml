@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:paddingHorizontal="8dp"
+	android:paddingBottom="32dp"
+	tools:context=".fragments.QuestionFragment">
+
+
+	<TextView
+		android:id="@+id/fragment_question_tv"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:paddingVertical="4dp"
+		android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+		android:textColor="@color/colorAccent" />
+
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<RadioGroup
+			android:id="@+id/fragment_options_rg"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:visibility="visible" />
+
+		<LinearLayout
+			android:id="@+id/fragment_option_ll"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical"
+			android:baselineAligned="true"
+			android:orientation="horizontal"
+			android:paddingVertical="4dp"
+			android:visibility="visible">
+
+			<EditText
+				android:id="@+id/fragment_option_et"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
+				android:layout_weight="90"
+				android:autofillHints="false"
+				android:hint="@string/enter_your_answer_here"
+				android:inputType="textShortMessage" />
+
+			<Button
+				android:id="@+id/fragment_option_bt"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
+				android:paddingHorizontal="8dp"
+				android:text="@string/ok" />
+
+		</LinearLayout>
+	</FrameLayout>
+
+</LinearLayout>

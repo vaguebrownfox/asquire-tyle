@@ -1,0 +1,28 @@
+<resources>
+	<string name="app_name">Asquire Moon 0x0B</string>
+	<string name="logo">logo</string>
+	<string name="allowed_name_chars2">abcdefghijklmnopqrstuvwxyz</string>
+	<string name="add_user">Add user</string>
+	<!-- TODO: Remove or change this placeholder text -->
+	<string name="hello_blank_fragment">Hello blank fragment</string>
+	<string name="context_text">I am participating in a study of “Comparison of speech analysis and spirometry in asthmatic subjects: A prospective study” of my own free will. I have been explained in detail the aims, objectives, and importance of this study. The method of the study and the details of the same have been explained to me in a language I understand. No pressure has been brought on me to participate in the study. I understand that I can withdraw from the study or refuse permission for my test data to be utilized at any time and without assigning any reasons, and without my withdrawal affecting my care. I have also been explained to and understood the basic details about the spirometry and speech analysis tests performed on me, which I choose to undergo. I am aware of the procedure of the tests and the risks associated which is minimal, however, consent for the procedures. I the undersigned, give my valid written consent to be a participant in this investigation.</string>
+	<string name="asquire_subject_proforma">Asquire Subject Proforma</string>
+	<string name="survey_info">Survey</string>
+	<string name="proceed_button_text">Proceed</string>
+	<string name="category_overview">Overview</string>
+	<string name="hint_profile_name">Name</string>
+	<string name="allowed_name_chars">ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz</string>
+	<string name="hint_profile_age">Age</string>
+	<string name="unit_profile_age">years</string>
+	<string name="category_gender">Gender</string>
+	<string name="category_measurement">Measurements</string>
+	<string name="hint_profile_height">Height</string>
+	<string name="unit_profile_height">cm</string>
+	<string name="hint_profile_weight">Weight</string>
+	<string name="unit_profile_weight">kg</string>
+	<string name="gender_male_cap">Male</string>
+	<string name="next">Next</string>
+	<string name="okay">OK</string>
+	<string name="ok">Ok</string>
+	<string name="enter_your_answer_here">Enter your answer here</string>
+</resources>
