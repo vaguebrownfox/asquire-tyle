@@ -30,7 +30,12 @@
 			android:name=".asqengine.AudioService"
 			android:enabled="true"
 			android:exported="false" />
-		<activity android:name=".RecordActivity" />
+		<activity
+			android:name=".RecordActivity"
+			android:screenOrientation="portrait"
+			android:theme="@style/Theme.AsquireMoon0x0B"
+			android:windowSoftInputMode="stateHidden"
+			/>
 		<activity
 			android:name=".SurveyActivity"
 			android:screenOrientation="portrait"
