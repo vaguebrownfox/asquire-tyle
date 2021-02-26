@@ -25,7 +25,7 @@ include_directories(
 )
 
 # Oboe source - download from github: gooogle/oboe
-set(OBOE_DIR /home/darwin/Libs/oboe)
+set(OBOE_DIR /home/darwin/Libs/oboe2)
 add_subdirectory(${OBOE_DIR} ./oboe-bin)
 include_directories(${OBOE_DIR}/include ${OBOE_DIR}/samples/shared)
 

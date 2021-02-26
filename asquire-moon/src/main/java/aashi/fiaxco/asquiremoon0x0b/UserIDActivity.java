@@ -77,9 +77,7 @@ public class UserIDActivity extends AppCompatActivity {
 
 	private void setUpOnClickListeners() {
 		// FAB
-		mAddUserFAB.setOnClickListener(view -> {
-			fabAddUser();
-		});
+		mAddUserFAB.setOnClickListener(view -> fabAddUser());
 
 		// User Radio buttons
 		mUserInButtonsRG.setOnCheckedChangeListener((radioGroup, i) -> {
