@@ -43,7 +43,7 @@ public class UploadService extends Service {
 
 		mStorage = FirebaseStorage.getInstance();
 		StorageReference storageRef = mStorage.getReference();
-		data0x00Ref = storageRef.child("data0x00");
+		data0x00Ref = storageRef.child("data0x02test");
 
 	}
 

@@ -1,14 +1,18 @@
 package aashi.fiaxco.asquiremoon0x0b;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -33,6 +37,8 @@ public class UserIDActivity extends AppCompatActivity {
 	private static final String TAG = "UserIDActivity";
 	public static final String USER_ID = "user_id_from_user_id_activity";
 	private static final int SURVEY_ACT_RES_CODE = 890;
+	private static final int AUDIO_EFFECT_REQUEST = 9999;
+
 	private final short MAX_USERS = 5;
 	private final short ID_LENGTH = 8;
 
@@ -81,15 +87,11 @@ public class UserIDActivity extends AppCompatActivity {
 
 		// User Radio buttons
 		mUserInButtonsRG.setOnCheckedChangeListener((radioGroup, i) -> {
-			RadioButton radioButton = findViewById(radioGroup.getCheckedRadioButtonId());
-			String name = radioButton.getText().toString();
-			mUserID = Objects.requireNonNull(mUserMap.get(name)).toString();
-			makeToast(mUserID);
+			requestRecordPermission();
+			if (isRecordPermissionGranted()) {
+				startSurvey(radioGroup);
+			}
 
-			Intent surveyIntent =
-					new Intent(UserIDActivity.this, SurveyActivity.class);
-			surveyIntent.putExtra(USER_ID, mUserID);
-			startActivityForResult(surveyIntent, SURVEY_ACT_RES_CODE);
 		});
 
 		// Dark Mode toggle
@@ -98,6 +100,17 @@ public class UserIDActivity extends AppCompatActivity {
 			else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 		});
 
+	}
+
+	private void startSurvey(RadioGroup radioGroup) {
+		RadioButton radioButton = findViewById(radioGroup.getCheckedRadioButtonId());
+		String name = radioButton.getText().toString();
+		mUserID = Objects.requireNonNull(mUserMap.get(name)).toString();
+		makeToast(mUserID);
+		Intent surveyIntent =
+				new Intent(UserIDActivity.this, SurveyActivity.class);
+		surveyIntent.putExtra(USER_ID, mUserID);
+		startActivityForResult(surveyIntent, SURVEY_ACT_RES_CODE);
 	}
 
 
@@ -165,6 +178,35 @@ public class UserIDActivity extends AppCompatActivity {
 	private Map<String, ?> readUsers() {
 		SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
 		return sharedPref.getAll();
+	}
+
+	// Permissions
+	private boolean isRecordPermissionGranted() {
+		return (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) ==
+				PackageManager.PERMISSION_GRANTED);
+	}
+
+	private void requestRecordPermission() {
+		ActivityCompat.requestPermissions(
+				this,
+				new String[]{Manifest.permission.RECORD_AUDIO},
+				AUDIO_EFFECT_REQUEST);
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		if (AUDIO_EFFECT_REQUEST != requestCode) {
+			super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+			return;
+		}
+
+		if (grantResults.length != 1 ||
+				grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+
+			makeToast(getString(R.string.need_record_audio_permission));
+		}
 	}
 
 	// Misc
